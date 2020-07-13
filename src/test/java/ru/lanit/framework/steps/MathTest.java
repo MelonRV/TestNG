@@ -20,42 +20,37 @@ public class MathTest {
         System.out.println("Подчищаем после тестов");
     }
 
+
     @DataProvider
-    public Object[][] testEquals() {
+    public Object[][] testSumAndSub() {
         return new Object[][]{
-                {4, 2, 2},
-                {0, -1, 1},
-                {8, 4, 4},
-                {-1, 0, -1},
-                {5, 2, 3}
+                {6, 3, 3},
+                {0, -2, 2},
+                {-9, -5, -4},
+
         };
     }
 
-    @Test(dataProvider = "testEquals")
-    public void testEqualsFive(int one, int two, int tree) {
-        Assert.assertEquals(one, two + tree, "Значения не равны!");
+    @DataProvider
+    public Object[][] testMultiAndDiv() {
+        return new Object[][]{
+                {9, 3, 3},
+                {0, 0, 2},
+                {15, -5, -3},
+                {-15, 5, -3},
+        };
     }
 
-    @DataProvider(parallel = true)
-    public Object[][] testEqualsNegative() {
+    @DataProvider
+    public Object[][] testNegative() {
         return new Object[][]{
                 {5, 2, 2},
                 {1, -1, 1},
                 {100, 4, 4},
-                {7, 0, -1},
-                {3, 2, 3}
+
         };
     }
 
-    @Test(dataProvider = "testEqualsNegative")
-    public void testEqualsNegative(int one, int two, int tree) {
-        Assert.assertNotEquals(one, new Math().sumTest(two, tree), "Значения равны!");
-    }
-
-    @Test(dataProvider = "testEquals")
-    public void newTest(int one, int two, int tree) {
-        Assert.assertEquals(one, new Math().sumTest(two, tree), "Значения не равны!");
-    }
     @DataProvider
     public Object[][] testObject() {
         return new Object[][]{
@@ -67,14 +62,47 @@ public class MathTest {
         };
     }
 
-    @Test(dataProvider = "testObject", expectedExceptions = {ClassCastException.class, NullPointerException.class, AssertionError.class})
-    public void testNegativeObject(Object one, Object two, Object tree) {
-        Assert.assertEquals(one, new Math().sumTest(two, tree), "Значения не равны!");
+
+    @Test(dataProvider = "testSumAndSub")
+    public void testEqualsSum(double one, double two, double tree) {
+        Assert.assertEquals(one, new Math().sum(two, tree), "Значения не равны!");
     }
 
-    @Test
-    public void testNotEquals() {
-        assert 2 * 2 == 4 : "two times two is not five!";
-        Assert.assertFalse(5 == 2 + 2);
+    @Test(dataProvider = "testNegative")
+    public void testEqualsNegativeSum(double one, double two, double tree) {
+        Assert.assertNotEquals(one, new Math().sum(two, tree), "Значения равны!");
+    }
+
+
+    @Test(dataProvider = "testSumAndSub")
+    public void testEqualsSub(double one, double two, double tree) {
+        Assert.assertEquals(tree, new Math().sub(one, two), "Значения не равны!");
+    }
+
+    @Test(dataProvider = "testNegative")
+    public void testEqualsNegativeSub(double one, double two, double tree) {
+        Assert.assertNotEquals(one, new Math().sub(two, tree), "Значения равны!");
+
+    }
+    @Test(dataProvider = "testMultiAndDiv")
+    public void testEqualsMulti(double one, double two, double tree) {
+        Assert.assertEquals(one, new Math().multi(two,tree), "Значения не равны!");
+
+    }
+    @Test(dataProvider = "testMultiAndDiv")
+    public void testEqualsDiv(double one, double two, double tree) {
+        Assert.assertEquals(two, new Math().div(one, tree), "Значения не равны!");
+    }
+    @Test(dataProvider = "testNegative")
+    public void testEqualsNegativeMulti(double one, double two, double tree) {
+        Assert.assertNotEquals(one, new Math().multi(two, tree), "Значения равны!");
+    }
+
+    @Test(dataProvider = "testNegative")
+    public void testEqualsNegativeDiv(double one, double two, double tree) {
+        Assert.assertNotEquals(one, new Math().div(two, tree), "Значения равны!");
     }
 }
+
+
+
